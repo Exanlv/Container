@@ -84,9 +84,9 @@ class Container implements ContainerInterface
             throw new BuildItemException(previous: $e);
         }
 
-        try {
-            $reflectionConstructor = $reflectionClass->getMethod('__construct');
-        } catch (ReflectionException $e) {
+        $reflectionConstructor = $reflectionClass->getConstructor();
+
+        if (is_null($reflectionConstructor)) {
             return [];
         }
 
