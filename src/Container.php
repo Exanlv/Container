@@ -15,6 +15,10 @@ class Container implements ContainerInterface
     private array $items = [];
 
     /**
+     * @template T
+     * @param class-string<T> $id
+     * @return T
+     *
      * @throws BuildItemException
      */
     public function get(string $id)
@@ -93,7 +97,7 @@ class Container implements ContainerInterface
                 }
             }
 
-            return $type->getTypes()[0]->getName();
+            throw new BuildItemException('No types for parameter can be built: ' . $param->getName());
         }, $reflectionConstructor->getParameters());
     }
 
