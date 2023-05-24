@@ -4,6 +4,7 @@ namespace Tests\Exan\Container;
 
 use Exan\Container\Container;
 use Exan\Container\Exceptions\BuildItemException;
+use Exan\Container\Exceptions\NotFoundException;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Tests\Exan\Container\Dummy\ClassWithDependency;
@@ -137,7 +138,7 @@ class ContainerTest extends TestCase
 
         $container = new Container();
 
-        $this->expectException(BuildItemException::class);
+        $this->expectException(NotFoundException::class);
         $container->get($testClass::class);
     }
 
@@ -151,7 +152,7 @@ class ContainerTest extends TestCase
 
         $container = new Container();
 
-        $this->expectException(BuildItemException::class);
+        $this->expectException(NotFoundException::class);
         $container->get($testClass::class);
     }
 

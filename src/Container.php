@@ -3,6 +3,7 @@
 namespace Exan\Container;
 
 use Exan\Container\Exceptions\BuildItemException;
+use Exan\Container\Exceptions\NotFoundException;
 use Psr\Container\ContainerInterface;
 use ReflectionClass;
 use ReflectionException;
@@ -20,11 +21,20 @@ class Container implements ContainerInterface
      * @return T
      *
      * @throws BuildItemException
+     * @throws NotFoundException
      */
     public function get(string $id)
     {
         if (!$this->hasActive($id)) {
-            $this->build($id);
+            try {
+                $this->build($id);
+            } catch (BuildItemException $e) {
+                if ($this->canBuild($id)) {
+                    throw $e;
+                }
+
+                throw new NotFoundException(previous: $e);
+            }
         }
 
         return $this->items[$id];
