@@ -64,7 +64,7 @@ class Container implements ContainerInterface
         }
 
         foreach ($args as $arg) {
-            if (!$this->canBuild($arg)) {
+            if (!$this->has($arg)) {
                 return false;
             }
         }
